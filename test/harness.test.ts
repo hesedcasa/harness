@@ -1,0 +1,79 @@
+import {runCommand} from '@oclif/test'
+import {expect} from 'chai'
+import {mkdtemp, readFile, rm, writeFile} from 'node:fs/promises'
+import {tmpdir} from 'node:os'
+import {join} from 'node:path'
+
+describe('harness', () => {
+  let home: string
+  let workspace: string
+  let previousHome: string | undefined
+
+  beforeEach(async () => {
+    previousHome = process.env.HARNESS_HOME
+    home = await mkdtemp(join(tmpdir(), 'ai-harness-home-'))
+    workspace = await mkdtemp(join(tmpdir(), 'ai-harness-workspace-'))
+    process.env.HARNESS_HOME = home
+  })
+
+  afterEach(async () => {
+    if (previousHome === undefined) {
+      delete process.env.HARNESS_HOME
+    } else {
+      process.env.HARNESS_HOME = previousHome
+    }
+
+    await rm(home, {force: true, recursive: true})
+    await rm(workspace, {force: true, recursive: true})
+  })
+
+  it('configures profiles and workspaces, then resolves them for run --dry-run', async () => {
+    await runCommand(
+      'profile add fast --provider openai --model gpt-4.1 --api openai-responses --api-key-env OPENAI_API_KEY --use',
+    )
+    await runCommand(`workspace add app --mode sandbox --path ${workspace} --repo https://example.com/repo.git --use`)
+
+    const {stdout} = await runCommand('run "list files" --dry-run --profile fast --workspace app')
+    const resolved = JSON.parse(stdout)
+    expect(resolved.profile).to.include({api: 'openai-responses', model: 'gpt-4.1', name: 'fast', provider: 'openai'})
+    expect(resolved.workspace).to.include({
+      gitRepo: 'https://example.com/repo.git',
+      mode: 'sandbox',
+      name: 'app',
+      path: workspace,
+    })
+    expect(resolved.piArgs).to.deep.equal(['--print', '--provider', 'openai', '--model', 'gpt-4.1', 'list files'])
+  })
+
+  it('registers skills and calls local workspace tools', async () => {
+    const skill = join(workspace, 'SKILL.md')
+    await writeFile(skill, '# Skill\n', 'utf8')
+    await writeFile(join(workspace, 'hello.txt'), 'hello harness\n', 'utf8')
+
+    await runCommand(`workspace add app --path ${workspace} --use`)
+    await runCommand(`skills add review ${skill} --description "Review code"`)
+
+    const skills = await runCommand('skills list')
+    expect(skills.stdout).to.contain('review')
+    expect(skills.stdout).to.contain('Review code')
+
+    const tools = await runCommand('tools call read hello.txt --workspace app')
+    expect(tools.stdout).to.equal('hello harness\n\n')
+
+    await runCommand('profile add fast --provider anthropic --model claude-sonnet --api anthropic-messages --use')
+    const run = await runCommand('run "use skill" --dry-run')
+    expect(JSON.parse(run.stdout).piArgs).to.deep.equal([
+      '--print',
+      '--provider',
+      'anthropic',
+      '--model',
+      'claude-sonnet',
+      '--skill',
+      skill,
+      'use skill',
+    ])
+
+    const config = JSON.parse(await readFile(join(home, 'config.json'), 'utf8'))
+    expect(config.skills.review.path).to.equal(skill)
+  })
+})
