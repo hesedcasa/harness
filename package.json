@@ -1,5 +1,5 @@
 {
-  "name": "harness",
+  "name": "@hesed/harness",
   "description": "Extensible CLI harness for running configurable AI coding agents",
   "version": "0.1.0",
   "author": "Hesed",
