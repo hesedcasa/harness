@@ -26,11 +26,11 @@ Config is stored in `~/.ai-harness/config.json` by default. Set `HARNESS_HOME` t
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g harness
+$ npm install -g @hesed/harness
 $ ai COMMAND
 running command...
 $ ai (--version)
-harness/0.1.0 linux-x64 node-v22.22.3
+@hesed/harness/0.1.0 linux-x64 node-v22.22.3
 $ ai --help [COMMAND]
 USAGE
   $ ai COMMAND
