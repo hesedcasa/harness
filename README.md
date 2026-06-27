@@ -47,7 +47,7 @@ USAGE
 * [`ai run [MESSAGE]`](#ai-run-message)
 * [`ai skills add NAME PATH`](#ai-skills-add-name-path)
 * [`ai skills list`](#ai-skills-list)
-* [`ai tools call TOOL [INPUT]`](#ai-tools-call-tool-input)
+* [`ai tools call TOOL`](#ai-tools-call-tool)
 * [`ai tools list`](#ai-tools-list)
 * [`ai workspace add NAME`](#ai-workspace-add-name)
 * [`ai workspace list`](#ai-workspace-list)
@@ -205,37 +205,43 @@ DESCRIPTION
 
 _See code: [src/commands/skills/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/skills/list.ts)_
 
-## `ai tools call TOOL [INPUT]`
+## `ai tools call TOOL`
 
-Call a local harness tool in a selected workspace
+Call a harness tool: a built-in workspace tool or any host command
 
 ```
 USAGE
-  $ ai tools call TOOL [INPUT] [-w <value>]
+  $ ai tools call TOOL... [-w <value>]
 
 ARGUMENTS
-  TOOL     Tool name
-  [INPUT]  Tool input
+  TOOL...  Tool name: a built-in workspace tool or a host command
 
 FLAGS
   -w, --workspace=<value>  Workspace name to use
 
 DESCRIPTION
-  Call a local harness tool in a selected workspace
+  Call a harness tool: a built-in workspace tool or any host command
+
+EXAMPLES
+  $ ai tools call read src/index.ts
+
+  $ ai tools call grep "needle with spaces"
+
+  $ ai tools call profile:add -- fast --provider openai --model gpt-4.1
 ```
 
 _See code: [src/commands/tools/call.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/tools/call.ts)_
 
 ## `ai tools list`
 
-List built-in local tools available to the harness
+List the tools available to the harness: built-in workspace tools and every host command
 
 ```
 USAGE
   $ ai tools list
 
 DESCRIPTION
-  List built-in local tools available to the harness
+  List the tools available to the harness: built-in workspace tools and every host command
 ```
 
 _See code: [src/commands/tools/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/tools/list.ts)_

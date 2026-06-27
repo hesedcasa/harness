@@ -21,14 +21,6 @@ export async function callTool(workspacePath: string, tool: ToolName, input: str
   }
 }
 
-export function assertToolName(value: string): ToolName {
-  if (TOOL_NAMES.includes(value as ToolName)) {
-    return value as ToolName
-  }
-
-  throw new Error(`Unknown tool "${value}". Available tools: ${TOOL_NAMES.join(', ')}`)
-}
-
 function resolveInside(root: string, input: string): string {
   const resolved = resolve(root, input || '.')
   const relativePath = relative(root, resolved)
