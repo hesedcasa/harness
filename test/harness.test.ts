@@ -76,4 +76,27 @@ describe('harness', () => {
     const config = JSON.parse(await readFile(join(home, 'config.json'), 'utf8'))
     expect(config.skills.review.path).to.equal(skill)
   })
+
+  it('lists built-in tools alongside every host command', async () => {
+    const {stdout} = await runCommand('tools list')
+    expect(stdout).to.contain('Built-in tools:')
+    expect(stdout).to.contain('grep')
+    expect(stdout).to.contain('Host tools:')
+    // Host commands are surfaced via plugin-lib's command enumeration.
+    expect(stdout).to.contain('profile add')
+    expect(stdout).to.contain('workspace list')
+    expect(stdout).to.contain('tools call')
+  })
+
+  it('calls a host command tool through tools call', async () => {
+    await runCommand('profile add fast --provider openai --model gpt-4.1 --api openai-responses --use')
+
+    const {stdout} = await runCommand('tools call "profile list"')
+    expect(stdout).to.contain('fast')
+  })
+
+  it('rejects an unknown tool name', async () => {
+    const {error} = await runCommand('tools call does-not-exist')
+    expect(error?.message).to.contain('Unknown tool')
+  })
 })

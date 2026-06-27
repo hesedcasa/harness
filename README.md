@@ -207,35 +207,35 @@ _See code: [src/commands/skills/list.ts](https://github.com/hesedcasa/harness/bl
 
 ## `ai tools call TOOL [INPUT]`
 
-Call a local harness tool in a selected workspace
+Call a harness tool: a built-in workspace tool or any host command
 
 ```
 USAGE
   $ ai tools call TOOL [INPUT] [-w <value>]
 
 ARGUMENTS
-  TOOL     Tool name
-  [INPUT]  Tool input
+  TOOL     Tool name: a built-in workspace tool or a host command
+  [INPUT]  Tool input, or arguments for a host command
 
 FLAGS
   -w, --workspace=<value>  Workspace name to use
 
 DESCRIPTION
-  Call a local harness tool in a selected workspace
+  Call a harness tool: a built-in workspace tool or any host command
 ```
 
 _See code: [src/commands/tools/call.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/tools/call.ts)_
 
 ## `ai tools list`
 
-List built-in local tools available to the harness
+List the tools available to the harness: built-in workspace tools and every host command
 
 ```
 USAGE
   $ ai tools list
 
 DESCRIPTION
-  List built-in local tools available to the harness
+  List the tools available to the harness: built-in workspace tools and every host command
 ```
 
 _See code: [src/commands/tools/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/tools/list.ts)_
