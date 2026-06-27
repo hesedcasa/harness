@@ -13,10 +13,12 @@ $ ai workspace add app --mode sandbox --repo https://github.com/example/app.git 
 $ ai skills add review ./skills/review/SKILL.md --description "Code review workflow"
 $ ai lsp list --workspace app
 $ ai tools list
+$ ai prompt add summarize "Inspect the project and summarize the architecture" --description "Architecture summary"
+$ ai prompt run summarize --profile fast --workspace app
 $ ai run "Inspect the project and summarize the architecture" --profile fast --workspace app
 ```
 
-Config is stored in `~/.ai-harness/config.json` by default. Set `HARNESS_HOME` to use a different config root, which is useful for tests or separate environments.
+Profiles, workspaces, and skills are stored in `~/.ai-harness/config.json` by default. Set `HARNESS_HOME` to use a different config root, which is useful for tests or separate environments. Saved prompts are persisted separately through `@hesed/plugin-lib` under the CLI's standard config directory (override with `AI_CONFIG_DIR`).
 
 <!-- toc -->
 * [harness](#harness)
@@ -30,7 +32,7 @@ $ npm install -g @hesed/harness
 $ ai COMMAND
 running command...
 $ ai (--version)
-@hesed/harness/0.1.1 linux-x64 node-v22.23.0
+@hesed/harness/0.1.1 linux-x64 node-v22.22.2
 $ ai --help [COMMAND]
 USAGE
   $ ai COMMAND
@@ -44,6 +46,13 @@ USAGE
 * [`ai profile list`](#ai-profile-list)
 * [`ai profile show [NAME]`](#ai-profile-show-name)
 * [`ai profile use NAME`](#ai-profile-use-name)
+* [`ai prompt add NAME BODY`](#ai-prompt-add-name-body)
+* [`ai prompt delete NAME`](#ai-prompt-delete-name)
+* [`ai prompt edit NAME [BODY]`](#ai-prompt-edit-name-body)
+* [`ai prompt list`](#ai-prompt-list)
+* [`ai prompt rm NAME`](#ai-prompt-rm-name)
+* [`ai prompt run NAME`](#ai-prompt-run-name)
+* [`ai prompt show NAME`](#ai-prompt-show-name)
 * [`ai run [MESSAGE]`](#ai-run-message)
 * [`ai skills add NAME PATH`](#ai-skills-add-name-path)
 * [`ai skills list`](#ai-skills-list)
@@ -147,6 +156,139 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/profile/use.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/profile/use.ts)_
+
+## `ai prompt add NAME BODY`
+
+Create or overwrite a saved prompt
+
+```
+USAGE
+  $ ai prompt add NAME BODY [-d <value>]
+
+ARGUMENTS
+  NAME  Prompt name
+  BODY  Prompt text to save
+
+FLAGS
+  -d, --description=<value>  Short prompt description
+
+DESCRIPTION
+  Create or overwrite a saved prompt
+```
+
+_See code: [src/commands/prompt/add.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/add.ts)_
+
+## `ai prompt delete NAME`
+
+Delete a saved prompt
+
+```
+USAGE
+  $ ai prompt delete NAME
+
+ARGUMENTS
+  NAME  Prompt name
+
+DESCRIPTION
+  Delete a saved prompt
+
+ALIASES
+  $ ai prompt rm
+```
+
+_See code: [src/commands/prompt/delete.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/delete.ts)_
+
+## `ai prompt edit NAME [BODY]`
+
+Edit a saved prompt
+
+```
+USAGE
+  $ ai prompt edit NAME [BODY] [-d <value>]
+
+ARGUMENTS
+  NAME    Prompt name
+  [BODY]  Replacement prompt text
+
+FLAGS
+  -d, --description=<value>  Replacement prompt description
+
+DESCRIPTION
+  Edit a saved prompt
+```
+
+_See code: [src/commands/prompt/edit.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/edit.ts)_
+
+## `ai prompt list`
+
+List saved prompts
+
+```
+USAGE
+  $ ai prompt list
+
+DESCRIPTION
+  List saved prompts
+```
+
+_See code: [src/commands/prompt/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/list.ts)_
+
+## `ai prompt rm NAME`
+
+Delete a saved prompt
+
+```
+USAGE
+  $ ai prompt rm NAME
+
+ARGUMENTS
+  NAME  Prompt name
+
+DESCRIPTION
+  Delete a saved prompt
+
+ALIASES
+  $ ai prompt rm
+```
+
+## `ai prompt run NAME`
+
+Execute a saved prompt through a selected profile and workspace
+
+```
+USAGE
+  $ ai prompt run NAME [--dry-run] [-p <value>] [-w <value>]
+
+ARGUMENTS
+  NAME  Prompt name
+
+FLAGS
+  -p, --profile=<value>    Profile name to use
+  -w, --workspace=<value>  Workspace name to use
+      --dry-run            Print the resolved launch context without starting Pi
+
+DESCRIPTION
+  Execute a saved prompt through a selected profile and workspace
+```
+
+_See code: [src/commands/prompt/run.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/run.ts)_
+
+## `ai prompt show NAME`
+
+View a saved prompt
+
+```
+USAGE
+  $ ai prompt show NAME
+
+ARGUMENTS
+  NAME  Prompt name
+
+DESCRIPTION
+  View a saved prompt
+```
+
+_See code: [src/commands/prompt/show.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/show.ts)_
 
 ## `ai run [MESSAGE]`
 

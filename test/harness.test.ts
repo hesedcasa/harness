@@ -8,12 +8,16 @@ describe('harness', () => {
   let home: string
   let workspace: string
   let previousHome: string | undefined
+  let previousConfigDir: string | undefined
 
   beforeEach(async () => {
     previousHome = process.env.HARNESS_HOME
+    previousConfigDir = process.env.AI_CONFIG_DIR
     home = await mkdtemp(join(tmpdir(), 'ai-harness-home-'))
     workspace = await mkdtemp(join(tmpdir(), 'ai-harness-workspace-'))
     process.env.HARNESS_HOME = home
+    // plugin-lib stores prompts under oclif's configDir; pin it to the temp home.
+    process.env.AI_CONFIG_DIR = home
   })
 
   afterEach(async () => {
@@ -21,6 +25,12 @@ describe('harness', () => {
       delete process.env.HARNESS_HOME
     } else {
       process.env.HARNESS_HOME = previousHome
+    }
+
+    if (previousConfigDir === undefined) {
+      delete process.env.AI_CONFIG_DIR
+    } else {
+      process.env.AI_CONFIG_DIR = previousConfigDir
     }
 
     await rm(home, {force: true, recursive: true})
@@ -107,5 +117,39 @@ describe('harness', () => {
   it('rejects an unknown tool name', async () => {
     const {error} = await runCommand('tools call does-not-exist')
     expect(error?.message).to.contain('Unknown tool')
+  })
+
+  it('saves, lists, views, edits, executes, and deletes prompts', async () => {
+    await runCommand('prompt add summary "Summarize the architecture" --description "Project summary"')
+
+    const list = await runCommand('prompt list')
+    expect(list.stdout).to.contain('summary')
+    expect(list.stdout).to.contain('Project summary')
+
+    const show = await runCommand('prompt show summary')
+    const shown = JSON.parse(show.stdout)
+    expect(shown).to.include({body: 'Summarize the architecture', description: 'Project summary', name: 'summary'})
+
+    await runCommand('prompt edit summary "Summarize the tests" --description "Test summary"')
+    const edited = JSON.parse((await runCommand('prompt show summary')).stdout)
+    expect(edited).to.include({body: 'Summarize the tests', description: 'Test summary'})
+
+    await runCommand('profile add fast --provider openai --model gpt-4.1 --api openai-responses --use')
+    await runCommand(`workspace add app --path ${workspace} --use`)
+    const run = await runCommand('prompt run summary --dry-run')
+    const resolved = JSON.parse(run.stdout)
+    expect(resolved.prompt).to.include({body: 'Summarize the tests', name: 'summary'})
+    expect(resolved.piArgs).to.deep.equal([
+      '--print',
+      '--provider',
+      'openai',
+      '--model',
+      'gpt-4.1',
+      'Summarize the tests',
+    ])
+
+    await runCommand('prompt delete summary')
+    expect((await runCommand('prompt list')).stdout).to.contain('no prompts saved')
+    expect((await runCommand('prompt show summary')).error?.message).to.contain('does not exist')
   })
 })

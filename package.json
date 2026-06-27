@@ -64,6 +64,9 @@
       "profile": {
         "description": "Manage LLM provider profiles"
       },
+      "prompt": {
+        "description": "Save and run reusable prompts"
+      },
       "skills": {
         "description": "Manage reusable agent skills"
       },
