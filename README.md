@@ -30,7 +30,7 @@ $ npm install -g @hesed/harness
 $ ai COMMAND
 running command...
 $ ai (--version)
-@hesed/harness/0.1.0 linux-x64 node-v22.23.0
+@hesed/harness/0.1.0 linux-x64 node-v22.22.3
 $ ai --help [COMMAND]
 USAGE
   $ ai COMMAND
