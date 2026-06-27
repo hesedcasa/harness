@@ -22,6 +22,19 @@ function describe(summary: unknown, description: unknown): string | undefined {
   return typeof description === 'string' && description.length > 0 ? description : undefined
 }
 
+function toHostTool(command: {description?: string; id: string; summary?: string}, separator: string): HostTool {
+  return {
+    id: command.id,
+    name: command.id.replaceAll(':', separator),
+    summary: describe(command.summary, command.description),
+  }
+}
+
+/** Normalise a user-supplied tool name to a canonical colon-separated id. */
+function canonicalId(name: string): string {
+  return name.trim().split(/[\s:]+/).join(':')
+}
+
 /**
  * Enumerate every visible, active command on the host CLI's Config as a tool.
  *
@@ -33,19 +46,17 @@ function describe(summary: unknown, description: unknown): string | undefined {
 export function listHostTools(config: Config): HostTool[] {
   const separator = config.topicSeparator ?? ':'
   return listCommands(config)
-    .map((command) => ({
-      id: command.id,
-      name: command.id.replaceAll(':', separator),
-      summary: describe(command.summary, command.description),
-    }))
+    .map((command) => toHostTool(command, separator))
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 /**
  * Resolve a host tool by name, accepting either the canonical colon id
- * (`profile:add`) or the separator-rendered form (`profile add`).
+ * (`profile:add`) or the separator-rendered form (`profile add`). Searches the
+ * command list directly rather than building the full sorted tool array.
  */
 export function findHostTool(config: Config, name: string): HostTool | undefined {
-  const canonical = name.trim().split(/[\s:]+/).join(':')
-  return listHostTools(config).find((tool) => tool.id === canonical)
+  const canonical = canonicalId(name)
+  const command = listCommands(config).find((c) => c.id === canonical)
+  return command && toHostTool(command, config.topicSeparator ?? ':')
 }

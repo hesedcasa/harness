@@ -95,6 +95,15 @@ describe('harness', () => {
     expect(stdout).to.contain('fast')
   })
 
+  it('forwards host-command arguments verbatim, preserving spaces', async () => {
+    // The argument after `--` contains a space; it must round-trip as one token
+    // rather than being split into several.
+    await runCommand('tools call profile:add -- spaced --provider openai --model "gpt 4 turbo" --api openai-responses')
+
+    const config = JSON.parse(await readFile(join(home, 'config.json'), 'utf8'))
+    expect(config.profiles.spaced.model).to.equal('gpt 4 turbo')
+  })
+
   it('rejects an unknown tool name', async () => {
     const {error} = await runCommand('tools call does-not-exist')
     expect(error?.message).to.contain('Unknown tool')
