@@ -152,4 +152,16 @@ describe('harness', () => {
     expect((await runCommand('prompt list')).stdout).to.contain('no prompts saved')
     expect((await runCommand('prompt show summary')).error?.message).to.contain('does not exist')
   })
+
+  it('refuses to overwrite a malformed prompt store instead of losing data', async () => {
+    await runCommand('prompt add keep "Original prompt"')
+    await writeFile(join(home, 'ai-prompts.json'), '{not valid json', 'utf8')
+
+    // A read error other than a missing file must surface, not silently reset.
+    const add = await runCommand('prompt add another "Should not clobber"')
+    expect(add.error).to.exist
+
+    // The malformed file is left untouched rather than overwritten.
+    expect(await readFile(join(home, 'ai-prompts.json'), 'utf8')).to.equal('{not valid json')
+  })
 })
