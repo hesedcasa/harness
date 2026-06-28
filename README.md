@@ -32,7 +32,7 @@ $ npm install -g @hesed/harness
 $ ai COMMAND
 running command...
 $ ai (--version)
-@hesed/harness/0.1.1 linux-x64 node-v22.22.2
+@hesed/harness/0.2.0 linux-x64 node-v22.23.0
 $ ai --help [COMMAND]
 USAGE
   $ ai COMMAND
@@ -78,7 +78,7 @@ DESCRIPTION
   Detect language servers for a workspace
 ```
 
-_See code: [src/commands/lsp/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/lsp/list.ts)_
+_See code: [src/commands/lsp/list.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/lsp/list.ts)_
 
 ## `ai profile add NAME`
 
@@ -107,7 +107,7 @@ DESCRIPTION
   Create or update an LLM provider profile
 ```
 
-_See code: [src/commands/profile/add.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/profile/add.ts)_
+_See code: [src/commands/profile/add.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/profile/add.ts)_
 
 ## `ai profile list`
 
@@ -121,7 +121,7 @@ DESCRIPTION
   List configured LLM provider profiles
 ```
 
-_See code: [src/commands/profile/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/profile/list.ts)_
+_See code: [src/commands/profile/list.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/profile/list.ts)_
 
 ## `ai profile show [NAME]`
 
@@ -138,7 +138,7 @@ DESCRIPTION
   Show one LLM provider profile
 ```
 
-_See code: [src/commands/profile/show.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/profile/show.ts)_
+_See code: [src/commands/profile/show.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/profile/show.ts)_
 
 ## `ai profile use NAME`
 
@@ -155,7 +155,7 @@ DESCRIPTION
   Select the default LLM provider profile
 ```
 
-_See code: [src/commands/profile/use.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/profile/use.ts)_
+_See code: [src/commands/profile/use.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/profile/use.ts)_
 
 ## `ai prompt add NAME BODY`
 
@@ -176,7 +176,7 @@ DESCRIPTION
   Create or overwrite a saved prompt
 ```
 
-_See code: [src/commands/prompt/add.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/add.ts)_
+_See code: [src/commands/prompt/add.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/prompt/add.ts)_
 
 ## `ai prompt delete NAME`
 
@@ -196,7 +196,7 @@ ALIASES
   $ ai prompt rm
 ```
 
-_See code: [src/commands/prompt/delete.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/delete.ts)_
+_See code: [src/commands/prompt/delete.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/prompt/delete.ts)_
 
 ## `ai prompt edit NAME [BODY]`
 
@@ -217,7 +217,7 @@ DESCRIPTION
   Edit a saved prompt
 ```
 
-_See code: [src/commands/prompt/edit.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/edit.ts)_
+_See code: [src/commands/prompt/edit.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/prompt/edit.ts)_
 
 ## `ai prompt list`
 
@@ -231,7 +231,7 @@ DESCRIPTION
   List saved prompts
 ```
 
-_See code: [src/commands/prompt/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/list.ts)_
+_See code: [src/commands/prompt/list.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/prompt/list.ts)_
 
 ## `ai prompt rm NAME`
 
@@ -271,7 +271,7 @@ DESCRIPTION
   Execute a saved prompt through a selected profile and workspace
 ```
 
-_See code: [src/commands/prompt/run.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/run.ts)_
+_See code: [src/commands/prompt/run.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/prompt/run.ts)_
 
 ## `ai prompt show NAME`
 
@@ -288,7 +288,7 @@ DESCRIPTION
   View a saved prompt
 ```
 
-_See code: [src/commands/prompt/show.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/prompt/show.ts)_
+_See code: [src/commands/prompt/show.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/prompt/show.ts)_
 
 ## `ai run [MESSAGE]`
 
@@ -310,7 +310,7 @@ DESCRIPTION
   Run the Pi coding agent through a selected harness profile and workspace
 ```
 
-_See code: [src/commands/run/index.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/run/index.ts)_
+_See code: [src/commands/run/index.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/run/index.ts)_
 
 ## `ai skills add NAME PATH`
 
@@ -331,7 +331,7 @@ DESCRIPTION
   Register a reusable skill for the agent
 ```
 
-_See code: [src/commands/skills/add.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/skills/add.ts)_
+_See code: [src/commands/skills/add.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/skills/add.ts)_
 
 ## `ai skills list`
 
@@ -345,7 +345,7 @@ DESCRIPTION
   List registered skills
 ```
 
-_See code: [src/commands/skills/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/skills/list.ts)_
+_See code: [src/commands/skills/list.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/skills/list.ts)_
 
 ## `ai tools call TOOL`
 
@@ -372,7 +372,7 @@ EXAMPLES
   $ ai tools call profile:add -- fast --provider openai --model gpt-4.1
 ```
 
-_See code: [src/commands/tools/call.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/tools/call.ts)_
+_See code: [src/commands/tools/call.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/tools/call.ts)_
 
 ## `ai tools list`
 
@@ -386,7 +386,7 @@ DESCRIPTION
   List the tools available to the harness: built-in workspace tools and every host command
 ```
 
-_See code: [src/commands/tools/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/tools/list.ts)_
+_See code: [src/commands/tools/list.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/tools/list.ts)_
 
 ## `ai workspace add NAME`
 
@@ -413,7 +413,7 @@ DESCRIPTION
   Create or update a workspace
 ```
 
-_See code: [src/commands/workspace/add.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/workspace/add.ts)_
+_See code: [src/commands/workspace/add.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/workspace/add.ts)_
 
 ## `ai workspace list`
 
@@ -427,7 +427,7 @@ DESCRIPTION
   List configured workspaces
 ```
 
-_See code: [src/commands/workspace/list.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/workspace/list.ts)_
+_See code: [src/commands/workspace/list.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/workspace/list.ts)_
 
 ## `ai workspace show [NAME]`
 
@@ -444,7 +444,7 @@ DESCRIPTION
   Show one workspace
 ```
 
-_See code: [src/commands/workspace/show.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/workspace/show.ts)_
+_See code: [src/commands/workspace/show.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/workspace/show.ts)_
 
 ## `ai workspace use NAME`
 
@@ -461,5 +461,5 @@ DESCRIPTION
   Select the default workspace
 ```
 
-_See code: [src/commands/workspace/use.ts](https://github.com/hesedcasa/harness/blob/v0.1.1/src/commands/workspace/use.ts)_
+_See code: [src/commands/workspace/use.ts](https://github.com/hesedcasa/harness/blob/v0.2.0/src/commands/workspace/use.ts)_
 <!-- commandsstop -->
